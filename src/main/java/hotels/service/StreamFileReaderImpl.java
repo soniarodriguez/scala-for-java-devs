@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HotelFileReaderCsvImpl implements HotelFileReader {
+public class StreamFileReaderImpl implements HotelFileReader {
     @Override
     public List<String> readFile(String sourcePath) {
         URL resource = getClass().getResource(sourcePath);

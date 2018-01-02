@@ -1,5 +1,5 @@
 import hotels.service.HotelFileReader;
-import hotels.service.HotelFileReaderCsvImpl;
+import hotels.service.StreamFileReaderImpl;
 
 import java.util.List;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class AppJavaRunner {
 
     public static void main(String[] args) {
-        HotelFileReader hotelFileReader = new HotelFileReaderCsvImpl();
+        HotelFileReader hotelFileReader = new StreamFileReaderImpl();
         int action = -1;
 
         System.out.println("* * Welcome to hotels searcher * *");
