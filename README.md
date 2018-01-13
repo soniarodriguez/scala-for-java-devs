@@ -1,5 +1,5 @@
-#Scala for Java developers
-##Lesson 1. Getting Started with Scala and SBT
+# Scala for Java developers
+## Lesson 1. Getting Started with Scala and SBT
 
 The plan for this lesson is to familiarize with SBT and Scala by creating some Scala classes from their Java implementations.
 

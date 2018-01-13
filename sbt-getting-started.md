@@ -1,4 +1,4 @@
-#Getting started with SBT
+# Getting started with SBT
 
 SBT is a build tool, similar to Maven or Ant, that manages your dependencies using Ivy. It is *de facto* build tool in the Scala Community. Some of the main features are incremental compilation and an interactive shell.
 
@@ -9,13 +9,14 @@ You can use the sbt shell and type your tasks there or directly use the batch mo
 sbt clean compile
 ```
 
-##sbt shell
+## sbt shell
 Run sbt in your project directory with no arguments to start the sbt shell.
 ```
 $ sbt
 ```
+To exit the sbt shell type `exit` or use Ctrl+D (Unix) or Ctrl+Z (Windows).
 
-##Useful commands/tasks
+## Useful commands/tasks
 * `clean`           ➤ To delete all compiled code (in `/target`).
 * `compile`         ➤ To compile the main sources (in `src/main/scala` and `src/main/java`).
 * `test`            ➤ To compile and run all tests in the project.
@@ -38,4 +39,4 @@ or
 sbt ~testQuick
 ```
 
-If you use the `sbt` shell type `exit` or use Ctrl+D (Unix) or Ctrl+Z (Windows).
+
