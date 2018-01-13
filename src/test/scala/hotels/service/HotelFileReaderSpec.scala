@@ -9,11 +9,11 @@ class HotelFileReaderSpec extends FlatSpec with Matchers with TableDrivenPropert
   val implementations = Table(
     ("fileReaderImplType", "fileReaderImpl"),
     ("fileReaderStream implementation", new FileReaderStreamImpl),
-    ("fileReaderClassic implementation", new FileReaderClassicImpl))
+    ("fileReaderClassic implementation", new FileReaderClassicImpl),
+    ("fileReaderScala implementation", new FileReaderImpl))
 
   forAll(implementations) {
     (fileReaderImplType, fileReaderImpl) =>
-
 
       s"readFile using $fileReaderImplType" should "return empty list when a file doesn't exit" in {
         fileReaderImpl.readFile("/non-exists-file.csv").asScala shouldBe Nil
