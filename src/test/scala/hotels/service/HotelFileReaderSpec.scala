@@ -7,24 +7,25 @@ import scala.collection.JavaConverters._
 class HotelFileReaderSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks {
 
   val implementations = Table(
-    ("fileReaderImplType", "fileReaderImpl"),
-    ("fileReaderStream implementation", new FileReaderStreamImpl),
-    ("fileReaderClassic implementation", new FileReaderClassicImpl),
-    ("fileReaderScala implementation", new FileReaderImpl))
+    ("fileReaderImplType", "fileReaderImpl", "prefixFile"),
+    ("fileReaderStream implementation", new FileReaderStreamImpl, "/"),
+    ("fileReaderClassic implementation", new FileReaderClassicImpl, "/"),
+    ("fileReaderScala implementation", new FileReaderImpl, "")
+  )
 
   forAll(implementations) {
-    (fileReaderImplType, fileReaderImpl) =>
+    (fileReaderImplType, fileReaderImpl, prefixFile) =>
 
       s"readFile using $fileReaderImplType" should "return empty list when a file doesn't exit" in {
-        fileReaderImpl.readFile("/non-exists-file.csv").asScala shouldBe Nil
+        fileReaderImpl.readFile(s"${prefixFile}non-exists-file.csv").asScala shouldBe Nil
       }
 
       it should "return empty list when the file is empty" in {
-        fileReaderImpl.readFile("/hotels-empty.csv").asScala shouldBe Nil
+        fileReaderImpl.readFile(s"${prefixFile}hotels-empty.csv").asScala shouldBe Nil
       }
 
       it should "return a list of hotel names when the file contains several hotels" in {
-        val hotels = fileReaderImpl.readFile("/hotels.csv")
+        val hotels = fileReaderImpl.readFile(s"${prefixFile}hotels.csv")
 
         hotels.asScala shouldBe List(
           "Corinthia Hotel London",

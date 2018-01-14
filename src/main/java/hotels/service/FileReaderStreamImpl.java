@@ -17,9 +17,7 @@ public class FileReaderStreamImpl implements FileReader {
 
         if (resource != null) {
             try (Stream<String> stream = Files.lines(Paths.get(resource.getPath()))) {
-                return stream
-                        .filter(line -> !line.isEmpty())
-                        .collect(Collectors.toList());
+                return stream.collect(Collectors.toList());
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
             }

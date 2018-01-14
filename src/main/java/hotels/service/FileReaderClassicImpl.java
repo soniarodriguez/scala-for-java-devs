@@ -18,9 +18,7 @@ public class FileReaderClassicImpl implements FileReader {
                 String currentLine;
 
                 while ((currentLine = br.readLine()) != null) {
-                    if (!currentLine.isEmpty()) {
-                        lines.add(currentLine);
-                    }
+                    lines.add(currentLine);
                 }
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
