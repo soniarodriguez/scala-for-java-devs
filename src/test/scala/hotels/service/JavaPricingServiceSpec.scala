@@ -14,7 +14,8 @@ class JavaPricingServiceSpec extends FlatSpec with Matchers with TableDrivenProp
   val implementations = Table(
     ("pricingServiceImplType", "pricingServiceImpl"),
     ("javaPricingServiceImpl", new PricingServiceSimpleImpl),
-    ("scalaPricingServiceImpl", new PricingServiceImpl)
+    ("scalaPricingServiceMutableImpl", new PricingServiceMutableImpl),
+    ("scalaPricingServiceImmutableImpl", new PricingServiceImmutableImpl)
   )
 
   forAll(implementations) { (pricingServiceImplType, pricingService) =>
