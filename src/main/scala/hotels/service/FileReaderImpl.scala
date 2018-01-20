@@ -1,13 +1,13 @@
 package hotels.service
 
-import java.{util => ju}
+import java.util
 
 import scala.collection.JavaConverters._
 import scala.io.Source
 import scala.util.Try
 
 class FileReaderImpl extends FileReader {
-  override def readFile(sourcePath: String): ju.List[String] = {
+  override def readFile(sourcePath: String): util.List[String] = {
     readFileInScala(sourcePath).asJava
   }
 
