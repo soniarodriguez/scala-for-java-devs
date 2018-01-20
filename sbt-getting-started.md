@@ -29,7 +29,6 @@ To exit the sbt shell type `exit` or use Ctrl+D (Unix) or Ctrl+Z (Windows).
 * `testOnly <test>` ➤ To run some specific classes. Ex. `sbt "testOnly hotels.service.HotelFileReaderSpec"`
 * `testQuick`       ➤ To run only the failed tests in the previous run.
 * `run <argument>*` ➤ To run the main class for the project.
-* `package`         ➤ To create a jar with the classes compiled and the resources.
 * `console`         ➤ To start the Scala interpreter. To return to sbt, type `:quit`.
 * `reload`          ➤ To reload the build definition (if changes done in `build.sbt`, `project/*.scala`, `project/*.sbt`).
 * `help <command>`  ➤ To get further help.
