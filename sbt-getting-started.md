@@ -23,14 +23,21 @@ scala> :quit
 To exit the sbt shell type `exit` or use Ctrl+D (Unix) or Ctrl+Z (Windows).
 
 ## Useful commands/tasks
+* `console`         ➤ To start the Scala interpreter. To return to sbt, type `:quit`.
+
 * `clean`           ➤ To delete all compiled code (in `/target`).
+
 * `compile`         ➤ To compile the main sources (in `src/main/scala` and `src/main/java`).
+
 * `test`            ➤ To compile and run all tests in the project.
 * `testOnly <test>` ➤ To run some specific classes. Ex. `sbt "testOnly hotels.service.HotelFileReaderSpec"`
 * `testQuick`       ➤ To run only the failed tests in the previous run.
+
 * `run <argument>*` ➤ To run the main class for the project.
-* `console`         ➤ To start the Scala interpreter. To return to sbt, type `:quit`.
+* `runMain <class> <argument>*` ➤ To run specific class for the project. Ex `sbt "runMain AppJavaRunner"`
+
 * `reload`          ➤ To reload the build definition (if changes done in `build.sbt`, `project/*.scala`, `project/*.sbt`).
+
 * `help <command>`  ➤ To get further help.
 
 
