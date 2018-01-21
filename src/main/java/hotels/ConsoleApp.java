@@ -20,10 +20,7 @@ public class ConsoleApp {
         Scanner scanIn = new Scanner(System.in);
 
         while (action != 0) {
-            System.out.println("\nSelect an action: ");
-            System.out.println("\t1. Read hotels source file.");
-            System.out.println("\t2. Get max price of a list.");
-            System.out.println("\t0. To exit.");
+            printOptions();
 
             String inputString = scanIn.nextLine();
             try {
@@ -38,6 +35,14 @@ public class ConsoleApp {
                         break;
 
                     case 2:
+                        printPriceInOtherCurrency(pricingService, scanIn);
+                        break;
+
+                    case 3:
+                        printPricesBelowThreshold(pricingService, scanIn);
+                        break;
+
+                    case 4:
                         printMaxPrice(pricingService, scanIn);
                         break;
 
@@ -53,6 +58,17 @@ public class ConsoleApp {
         scanIn.close();
     }
 
+
+
+    private void printOptions() {
+        System.out.println("\nSelect an action: ");
+        System.out.println("\t1. Read hotels source file.");
+        System.out.println("\t2. Convert prices to a different currency.");
+        System.out.println("\t3. Find prices below a maximum threshold.");
+        System.out.println("\t4. Get max price of a list.");
+        System.out.println("\t0. To exit.");
+    }
+
     private void printFileContent(FileReader fileReader) {
         List<String> hotels = fileReader.readFile("/hotels.csv");
 
@@ -60,6 +76,65 @@ public class ConsoleApp {
         for (String hotel : hotels) {
             System.out.println("\t" + hotel);
         }
+    }
+
+    private void printPriceInOtherCurrency(PricingService pricingService, Scanner scanIn) {
+        try {
+            System.out.println("Write in comma separated values the list of prices");
+            String pricesInput = scanIn.nextLine();
+
+            Float rateInput = inputForExchangeRate(scanIn);
+
+            List<Integer> prices = getPricesList(pricesInput.split(","));
+            List<Integer> otherCurrencyPrices = pricingService.convertToExchangeRate(prices, rateInput);
+
+            System.out.println("Prices in that currency:");
+            printPricesList(otherCurrencyPrices);
+
+        } catch (NumberFormatException nfe) {
+            System.out.println("Invalid number");
+        }
+    }
+
+    private Float inputForExchangeRate(Scanner scanIn) {
+        System.out.println("Write the exchange rate of the currency");
+        String rateInput = scanIn.nextLine();
+
+        return Float.valueOf(rateInput);
+    }
+
+    private void printPricesBelowThreshold(PricingService pricingService, Scanner scanIn) {
+        try {
+            System.out.println("Write in comma separated values the list of prices");
+            String pricesInput = scanIn.nextLine();
+
+            int threshold = inputForThreshold(scanIn);
+
+            List<Integer> prices = getPricesList(pricesInput.split(","));
+            List<Integer> otherCurrencyPrices = pricingService.findPricesBelowThreshold(prices, threshold);
+
+            System.out.println(format("Prices below %d", threshold));
+            printPricesList(otherCurrencyPrices);
+
+        } catch (NumberFormatException nfe) {
+            System.out.println("Invalid number");
+        }
+    }
+
+    private Integer inputForThreshold(Scanner scanIn) {
+        System.out.println("Write the maximum price you want to filter for");
+        String thresholdInput = scanIn.nextLine();
+
+        return Integer.valueOf(thresholdInput);
+    }
+
+    private void printPricesList(List<Integer> prices) {
+        StringBuffer pricesToPrint = new StringBuffer();
+        for(Integer price: prices) {
+            pricesToPrint.append(price).append(",");
+        }
+        pricesToPrint.deleteCharAt(pricesToPrint.length() - 1);
+        System.out.println(pricesToPrint);
     }
 
     private void printMaxPrice(PricingService pricingService, Scanner scanIn) {
