@@ -1,6 +1,6 @@
 package hotels.service
 
-import java.util
+import java.{util, lang => jl}
 import java.util.Optional
 
 import hotels.service.impl.{PricingServiceImmutableImpl, PricingServiceMutableImpl, PricingServiceSimpleImpl}
@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 import org.scalatest.{FlatSpec, Matchers}
 
 
-class JavaPricingServiceSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks {
+class PricingServiceSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks {
 
   val implementations = Table(
     ("pricingServiceImplType", "pricingServiceImpl"),
@@ -20,6 +20,24 @@ class JavaPricingServiceSpec extends FlatSpec with Matchers with TableDrivenProp
   )
 
   forAll(implementations) { (pricingServiceImplType, pricingService) =>
+    s"convertToExchangeRate using $pricingServiceImplType" should "return empty list when list is empty" in {
+      val prices = util.Arrays.asList[Integer]()
+      val rate = new jl.Float(1.13f)
+
+      val convertedPrices = pricingService.convertToExchangeRate(prices, rate)
+
+      convertedPrices shouldBe(prices)
+    }
+
+    it should "return convert all values to the exchange rate" in {
+      val prices =  List(5, 10, 15).map(Integer.valueOf).asJava
+      val rate = new jl.Float(1.13f)
+
+      val convertedPrices = pricingService.convertToExchangeRate(prices, rate)
+
+      convertedPrices shouldBe(List(6, 11, 17).map(Integer.valueOf).asJava)
+    }
+
     s"findPricesBelowThreshold using $pricingServiceImplType" should "return empty list when list is empty" in {
       val prices = util.Arrays.asList[Integer]()
       val threshold = 23
@@ -29,7 +47,7 @@ class JavaPricingServiceSpec extends FlatSpec with Matchers with TableDrivenProp
       filteredPrices shouldBe(prices)
     }
 
-    s"findPricesBelowThreshold using $pricingServiceImplType" should "return same list when all prices are below the threshold" in {
+    it should "return same list when all prices are below the threshold" in {
       val prices =  List(5, 10, 15, 6).map(Integer.valueOf).asJava
       val threshold = 23
 
@@ -38,7 +56,7 @@ class JavaPricingServiceSpec extends FlatSpec with Matchers with TableDrivenProp
       filteredPrices shouldBe(prices)
     }
 
-    s"findPricesBelowThreshold using $pricingServiceImplType" should "return filtered list for prices below the threshold" in {
+    it should "return filtered list for prices below the threshold" in {
       val prices =  List(30, 24, 15, 6).map(Integer.valueOf).asJava
       val threshold = 23
 
@@ -47,7 +65,7 @@ class JavaPricingServiceSpec extends FlatSpec with Matchers with TableDrivenProp
       filteredPrices shouldBe(List(15, 6).map(Integer.valueOf).asJava)
     }
 
-    s"findPricesBelowThreshold using $pricingServiceImplType" should "filter price equal to threshold" in {
+    it should "filter price equal to threshold" in {
       val prices =  List(23, 24, 15).map(Integer.valueOf).asJava
       val threshold = 23
 

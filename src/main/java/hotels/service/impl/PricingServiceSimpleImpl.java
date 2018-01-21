@@ -8,6 +8,19 @@ import java.util.Optional;
 
 public class PricingServiceSimpleImpl implements PricingService {
     @Override
+    public List<Integer> convertToExchangeRate(List<Integer> prices, Float rate) {
+        List<Integer> filteredPrices = new ArrayList<>();
+        for (Integer price: prices) {
+          filteredPrices.add(convertPrice(price, rate));
+        }
+        return filteredPrices;
+    }
+
+    private Integer convertPrice(Integer price, Float rate) {
+        return Math.round(price * rate);
+    }
+
+    @Override
     public List<Integer> findPricesBelowThreshold(List<Integer> prices, Integer threshold) {
         List<Integer> filteredPrices = new ArrayList<>();
         for (Integer price: prices) {
