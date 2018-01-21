@@ -1,7 +1,7 @@
 import hotels.ConsoleApp;
-import hotels.service.FileReaderClassicImpl;
+import hotels.service.impl.FileReaderClassicImpl;
 import hotels.service.FileReader;
-import hotels.service.PricingServiceSimpleImpl;
+import hotels.service.impl.PricingServiceSimpleImpl;
 import hotels.service.PricingService;
 
 
