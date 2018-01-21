@@ -1,5 +1,9 @@
-package hotels.service
+package hotels.service.impl
+
 import java.util
+
+import hotels.service.FileReader
+
 import scala.collection.JavaConverters._
 
 class FileReaderImpl extends FileReader {

@@ -1,5 +1,7 @@
-package hotels.service;
+package hotels.service.impl;
 
+
+import hotels.service.FileReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;

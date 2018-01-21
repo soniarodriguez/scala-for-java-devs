@@ -1,7 +1,7 @@
 package utils
 
 import java.util.Optional
-import java.{lang => jl}
+import java.{util => ju}
 
 import scala.collection.JavaConverters._
 
@@ -14,7 +14,7 @@ object JavaConversions {
     }
   }
 
-  implicit def asJavaIteratorInteger(someIntegers: Iterable[Int]): jl.Iterable[Integer] = {
+  implicit def asJavaListInteger(someIntegers: List[Int]): ju.List[Integer] = {
     someIntegers.map(Integer.valueOf).asJava
   }
 }

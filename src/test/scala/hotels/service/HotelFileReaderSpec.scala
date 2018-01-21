@@ -1,7 +1,9 @@
 package hotels.service
 
+import hotels.service.impl.{FileReaderClassicImpl, FileReaderImpl, FileReaderStreamImpl}
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.TableDrivenPropertyChecks
+
 import scala.collection.JavaConverters._
 
 class HotelFileReaderSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks {
