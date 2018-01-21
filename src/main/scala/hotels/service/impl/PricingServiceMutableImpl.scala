@@ -7,10 +7,19 @@ import hotels.service.PricingService
 import utils.JavaConversions._
 import utils.ScalaConversions._
 
+
+/**
+  * PricingServiceMutableImpl will have methods written in a Imperative Programming way. Therefore, in this class you
+  * can use `var` and it has stateful methods.
+  *
+  * Due to this Scala class is implementing a Java Interface, some workaround is needed to be done to convert some Java
+  * types to Scala types. That's why you will only need to implement the private methods where everything is Scala type.
+  * The transformations from/to Scala are done implicitly. We will see how this is done in future lessons.
+  *
+  * see @hotels.service.impl.PricingServiceSimpleImpl to know what the methods need to do
+  */
 class PricingServiceMutableImpl extends PricingService {
 
-  // This method receives and returns Java types since it implements the Java Interface. It will do the transformations
-  // from/to Scala type implicitly. We will see how this is done in future lessons.
   override def convertToExchangeRate(prices: ju.List[Integer], rate: lang.Float): ju.List[Integer] = {
     convertToExchangeRateAsScala(prices, rate)
   }
@@ -20,7 +29,7 @@ class PricingServiceMutableImpl extends PricingService {
   }
 
   override def findMaxPrice(prices: ju.List[Integer]): Optional[Integer] = {
-    findMaxPriceUsingLoop(prices)
+    findMaxPriceAsScala(prices)
   }
 
   private def convertToExchangeRateAsScala(prices: List[Int], rate: Float): List[Int] = {
@@ -43,10 +52,7 @@ class PricingServiceMutableImpl extends PricingService {
     filteredPrices.toList
   }
 
-  // You need implement this method which uses only Scala types.
-  private def findMaxPriceUsingLoop(prices: List[Int]): Option[Int] = {
-    // This implementation can be using mutable state (`var`).
-
+  private def findMaxPriceAsScala(prices: List[Int]): Option[Int] = {
     if (prices.isEmpty) {
       None
     } else {
@@ -60,6 +66,4 @@ class PricingServiceMutableImpl extends PricingService {
     }
   }
 
-  private def getNewMax(currentPrice: Int, maybeMaxPrice: Option[Int]): Option[Int] =
-    if (currentPrice > maybeMaxPrice.getOrElse(Int.MinValue)) Some(currentPrice) else maybeMaxPrice
 }

@@ -9,10 +9,18 @@ import utils.ScalaConversions._
 
 import scala.annotation.tailrec
 
+/**
+  * PricingServiceImmutableImpl will have methods written in a Functional Programming way. Therefore, in this class you
+  * should not use `var` and it has stateless methods.
+  *
+  * Due to this Scala class is implementing a Java Interface, some workaround is needed to be done to convert some Java
+  * types to Scala types. That's why you will only need to implement the private methods where everything is Scala type.
+  * The transformations from/to Scala are done implicitly. We will see how this is done in future lessons.
+  *
+  * see @hotels.service.impl.PricingServiceSimpleImpl to know what the methods need to do
+  */
 class PricingServiceImmutableImpl extends PricingService {
 
-  // This method receives and returns Java types since it implements the Java Interface. It will do the transformations
-  // from/to Scala type implicitly. We will see how this is done in future lessons.
   override def convertToExchangeRate(prices: ju.List[Integer], rate: lang.Float): ju.List[Integer] = {
     convertToExchangeRateAsScala(prices, rate)
   }
@@ -35,9 +43,7 @@ class PricingServiceImmutableImpl extends PricingService {
     prices.filter(price => price < threshold)
   }
 
-  // You need implement this method which uses only Scala types.
   private def findMaxPriceStatelessAsScala(prices: List[Int]): Option[Int] = {
-    // This implementation should not use mutable variables (`var`).
     findMaxPriceRecursively(prices, None)
   }
 

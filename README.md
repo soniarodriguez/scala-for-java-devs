@@ -12,7 +12,32 @@ vs [Scala](https://github.com/soniarodriguez/scala-for-java-devs/blob/master/src
 
 In this lesson, you will familiarize with SBT and Scala. In the code, there are two Java interfaces:
 `FileReader` and `PrincingService`, they have been implemented in Java. Check what they do, then, try to
- fix the failing tests by implementing in Scala the non-implemented methods.
+fix the failing tests by implementing in Scala the non-implemented methods. There are 2 different implementations
+in Scala for `PrincingService`, ideally you will start with `PricingServiceMutableImpl` which is the closer to
+the traditional Java. Then, move to `PricingServiceImmutableImpl`.
 
 *Note: Non-implemented methods are represented with `???`.
 
+###Section I. Imperative Programming vs Functional Programming
+1. Implement in Scala the first two methods of `hotels.service.impl.PricingServiceMutableImpl` in an Imperative
+programming way.
+    - `convertToExchangeRateAsScala`
+    - `findPricesBelowThresholdAsScala`
+
+2. Implement using Scala the first two methods of `hotels.service.impl.PricingServiceImmutableImpl` in an Functional
+programming way.
+   - `convertToExchangeRateAsScala`
+   - `findPricesBelowThresholdAsScala`
+
+3. Implement using Scala the remaining method of `hotels.service.impl.PricingServiceMutableImpl` in an Imperative
+   programming way.
+      - `findMaxPriceAsScala`
+
+4. Implement using Scala the remaining method of `hotels.service.impl.PricingServiceImmutableImpl` in an Functional
+   programming way.
+      - `findMaxPriceAsScala`
+   
+
+###Section II. Reading a file
+1. Implement in Scala the method of `hotels.service.impl.FileReaderImpl`.
+    - `readFileAsScala`
