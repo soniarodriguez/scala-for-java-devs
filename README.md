@@ -18,7 +18,7 @@ the traditional Java. Then, move to `PricingServiceImmutableImpl`.
 
 *Note: Non-implemented methods are represented with `???`.
 
-###Section I. Imperative Programming vs Functional Programming
+### Section I. Imperative Programming vs Functional Programming
 1. Implement in Scala the first two methods of `hotels.service.impl.PricingServiceMutableImpl` in an Imperative
 programming way.
     - `convertToExchangeRateAsScala`
@@ -38,6 +38,6 @@ programming way.
       - `findMaxPriceAsScala`
    
 
-###Section II. Reading a file
+### Section II. Reading a file
 1. Implement in Scala the method of `hotels.service.impl.FileReaderImpl`.
     - `readFileAsScala`
