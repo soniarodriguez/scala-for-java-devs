@@ -49,13 +49,11 @@ class PricingServiceImmutableImpl extends PricingService {
 
   @tailrec
   private def findMaxPriceRecursively(prices: List[Int], maybeMaxPrice: Option[Int]): Option[Int] = {
-    prices match {
-      case Nil => None
-      case head :: Nil =>
-        getNewMax(head, maybeMaxPrice)
-      case head :: tail =>
-        findMaxPriceRecursively(tail, getNewMax(head, maybeMaxPrice))
-    }
+    if (prices.isEmpty)
+      maybeMaxPrice
+    else
+      findMaxPriceRecursively(prices.tail, getNewMax(prices.head, maybeMaxPrice))
+
   }
 
   private def getNewMax(currentPrice: Int, maybeMaxPrice: Option[Int]): Option[Int] =
