@@ -44,19 +44,22 @@ class PricingServiceImmutableImpl extends PricingService {
   }
 
   private def findMaxPriceStatelessAsScala(prices: List[Int]): Option[Int] = {
-    findMaxPriceRecursively(prices, None)
+    findMaxPriceRecursively2(prices, None)
   }
 
   @tailrec
   private def findMaxPriceRecursively(prices: List[Int], maybeMaxPrice: Option[Int]): Option[Int] = {
-    if (prices.isEmpty)
-      maybeMaxPrice
-    else
-      findMaxPriceRecursively(prices.tail, getNewMax(prices.head, maybeMaxPrice))
-
+    prices match {
+      case Nil =>
+        maybeMaxPrice
+      case head :: tail if head > maybeMaxPrice.getOrElse(Int.MinValue) =>
+        findMaxPriceRecursively(tail, Some(head))
+      case _ :: tail =>
+        findMaxPriceRecursively(tail, maybeMaxPrice)
+    }
   }
 
-  private def getNewMax(currentPrice: Int, maybeMaxPrice: Option[Int]): Option[Int] =
-    if (currentPrice > maybeMaxPrice.getOrElse(Int.MinValue)) Some(currentPrice) else maybeMaxPrice
-
+  private def findMaxPriceRecursively2(prices: List[Int], maybeMaxPrice: Option[Int]): Option[Int] = {
+    prices.foldLeft(maybeMaxPrice){(acc, num) => if (acc.getOrElse(Int.MinValue) < num) Some(num) else acc}
+  }
 }
