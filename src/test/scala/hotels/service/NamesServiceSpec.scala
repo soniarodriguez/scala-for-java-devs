@@ -27,7 +27,7 @@ class NamesServiceSpec extends FlatSpec with Matchers {
   }
 
   it should "return empty list if there are no names starting with particular letter" in {
-    val filteredNames = namesService.findAllNamesWithFirstLetter(List.empty[String], "Z")
+    val filteredNames = namesService.findAllNamesWithFirstLetter(guestNames, "Z")
 
     filteredNames shouldBe List.empty[String]
   }
