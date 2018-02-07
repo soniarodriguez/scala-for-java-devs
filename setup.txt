@@ -1,0 +1,4 @@
+brew install node
+npm install
+node plugin/notes-server
+

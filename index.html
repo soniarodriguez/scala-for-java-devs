@@ -76,11 +76,11 @@ nulls are bad
 NullPointerExceptions should not happen
 
 Note:
-- An NPE happens when they you try to access a field on null. 
-- When you see an NPE, really you're discovering something: that in that code, the object may or may not be present. And you didn't happen the case that it wasn't there!
+- An NPE happens when they you try to access a field on something that is null. 
+- When you see an NPE, really you're discovering something program: that in that piece of code, the object may or may not be present.
 - But unfortunately, you're finding that out at runtime! I'd much rather know about it at compile time.
 ~
-Let's walk through a motivating example from Oracle's blog post about it from 2014.  
+Let's walk through a motivating example an Oracle blog post about Optional.  
 <br>
 http://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html
 ~
@@ -315,7 +315,9 @@ Exercise - continue with the exercises. If you finish, try using for-comprehensi
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'socket.io/socket.io.js', async: true },
+		      { src: 'plugin/notes-server/client.js', async: true }
 				]
 			});
 		</script>
