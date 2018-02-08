@@ -44,20 +44,12 @@
 ## Scala for Java Developers
 ### Lesson 3
 ~
-We'll continue with the previous exercises
-
-Note:
-- Because not everyone has finished the exercised
-- And, there were a few concepts in those exercises which we should cover in more detail.
-- So you can go back and try to solv ethe exercises using more idiomatic Scala.
-~
-<small>but first...</small>  
 Let's explore two more features of Scala
 ~
 ## Option
 
 Note:
-- 
+- This was actually needed in the first lesson's exercises, but we didn't cover it in much detail.
 ~
 Scala's answer to null
 
@@ -77,12 +69,12 @@ NullPointerExceptions should not happen
 
 Note:
 - An NPE happens when they you try to access a field on something that is null. 
-- When you see an NPE, really you're discovering something program: that in that piece of code, the object may or may not be present.
-- But unfortunately, you're finding that out at runtime! I'd much rather know about it at compile time.
+- When you see an NPE, really **you're discovering something program**: that in that piece of code, the object may or may not be present.
+- But unfortunately, **you're finding that out at runtime**! I'd much rather know about it at compile time.
 ~
 Let's walk through a motivating example an Oracle blog post about Optional.  
 <br>
-http://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html
+<small>http://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html</small>
 ~
 ```java
 String version = computer.getSoundcard().getUSB().getVersion();
@@ -107,16 +99,16 @@ if(computer != null){
 ```
 Note:
 - So this is the safe/defensive version.
-- The API/types and the compiler didn't direct me to this, I just have to figure it out.
-- And we can get too defensive; how do I know `usb.getVersion()` won't be null?
-- It can silently change. Maybe the library makes something nullable, and when I upgrade I have no visibility of that.
+- Nothing helped me know I should do this. Nothing told me the previous code was unsafe.
+- If you use the @Nullable annotation on your Javadoc, then maybe your IDE or a linter will tell you?
+- But the API/types and the compiler didn't direct me to this, I just have to figure it out.
+- And we can fall into the trap of getting too defensive; how do I know `usb.getVersion()` won't be null?
 ~
 You can use Java 8's Optional instead
 
 Note:
 - So this is largely accepted to be a problem, and in Java 8, Optional was added.
 - And it existed in Guava before that.
-- Who's familiar with Optional?
 ~
 ```java
 String name = computer.flatMap(Computer::getSoundcard)
@@ -281,22 +273,106 @@ Note:
 - We can use flatMap, which we saw in the soundcard usb version example earlier. 
 - flatMap, in the context of collections, lets us handle nested loops in a for-comprehension
 - And interestingly, for-comprehensions work on more than just collections. 
-~~~
-Ways to implement `findMaxPrice`  
+~~~~
+### Implementing `findMaxPrice`
+~
+```scala
+def findMaxPrice(prices: List[Int]): Option[Int]
+```
+~
+Imperative
+```scala
+var max: Int = -1
 
+for (p <- prices) {
+  if (p > max)
+    max = p
+}
 
-- Start with imperative with while loop
-- Show with recursion
-- Show with foldLeft
-- Talk about the initial value needing to be Option.empty[Int]
-  - Type inference works left to right. 
-  - I didn’t learn this for like a year into Scala
-- Using .get on map and then rewrapping. Ignoring the case when there’s an empty list
-- Using functions on map (.map and .orElse)
-- Using pattern matching 
-  - Which we haven’t taught yet, but we’ll cover more later in the course. This is just a taster.
-    - Mention that for-comprehensions can’t be used for folding.
-Exercise - continue with the exercises. If you finish, try using for-comprehensions.
+if (max == -1)
+  None
+else
+  Some(max)
+```
+~
+recursion
+
+```
+val current = prices.head
+val rest = prices.tail
+findMaxPrice(rest).map(maxOfRest =>
+  Math.max(current, maxOfRest)
+)
+
+//not tail recursive
+//what if the list is empty
+```
+~
+recursive (safe and efficient)
+
+```scala
+def findMaxPrice(prices: List[Int]): Option[Int] = {
+  acc(prices, None)
+}
+
+@tailrec
+def acc(prices: List[Int], maybeMax: Option[Int]): Option[Int] = {
+  if (prices.isEmpty)
+    maybeMax
+  else
+    acc(prices.tail, getNewMax(prices.head, maybeMax))
+}
+```
+~
+fold
+```scala
+prices.foldLeft(-1)( (maxSoFar, next) =>
+  Math.max(maxSoFar, next)
+)
+
+//or
+
+prices.foldLeft(-1)(Math.max(_,_))
+
+//but what if the list is empty?
+```
+~
+fold (safe)
+```scala
+prices.foldLeft(Option.empty[Int])( (acc, next) =>
+  acc
+    .map( maxSoFar =>
+      Math.max(maxSoFar, next)
+    )
+    .orElse(Some(next))
+)
+```
+~
+What you should really do...
+
+```scala
+prices.max
+```
+
+Note:
+- Under the hood that's actually using quite an advanced concept called typeclasses.
+~~~~
+Continue with previous exercises.
+
+<br>
+
+Solution checklist:
+<small>
+- no vars
+- no mutable collections
+- try using for-comprehension instead of map or filter
+~~~~
+<small>The lesson is coming to an end...</small>
+### Feedback:
+https://goo.gl/forms/SrEAAs54YqaxEIsu1
+
+</small>
+
 					</textarea>
 				</section>
 			</div>
@@ -311,6 +387,7 @@ Exercise - continue with the exercises. If you finish, try using for-comprehensi
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
 				history: true,
+                slideNumber: true,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
