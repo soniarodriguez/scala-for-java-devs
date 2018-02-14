@@ -16,6 +16,22 @@ class HotelServiceImplSpec extends FlatSpec with Matchers {
   private val hotelsService = new HotelServiceImpl
 
 
+  "getHotelNames" should "return the hotel names list" in {
+    val hotelNames = hotelsService.getHotelNames(hotels)
+
+    hotelNames shouldBe List(
+      "Hilton London Canary Wharf",
+      "AC Porte Maillot Hotel",
+      "AC Hotel Atocha",
+      "Hotel l'Antoine")
+  }
+
+  it should "return empty list of names if the hotels list is empty" in {
+    val hotelNames = hotelsService.getHotelNames(List.empty[Hotel])
+
+    hotelNames shouldBe List.empty[String]
+  }
+
   "findHotelById" should "return the found hotel with the indicated id" in {
     val hotelsInParis = hotelsService.findHotelById(hotels, 2)
 
