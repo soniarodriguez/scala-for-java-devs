@@ -1,8 +1,12 @@
-# Scala for Java developers
+## Lesson 5
+# Implementing Option
 
-The plan of this course is getting started with Scala for developers who mainly work with Java. 
+Implement the methods on our version of Option inside `CreatingOption` to fix the tests.
 
-Before starting to check the code, it is recommendable to read some useful commands of [SBT.](https://github.com/soniarodriguez/scala-for-java-devs/tree/lesson1-java/sbt-getting-started.md)
+**Hint: Use pattern matching**
 
-Then, let's check some differences in a HelloWorld app in [Java](https://github.com/soniarodriguez/scala-for-java-devs/blob/master/src/main/java/AppJavaRunner.java)
-vs [Scala](https://github.com/soniarodriguez/scala-for-java-devs/blob/master/src/main/scala/AppScalaRunner.scala).
+Relevant documentation about pattern matching: 
+https://docs.scala-lang.org/tour/pattern-matching.html#matching-on-case-classes
+
+This exercise is adapted from one in "the red book":
+https://www.manning.com/books/functional-programming-in-scala
