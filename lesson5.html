@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/sky.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.reveal .footer {
+			position: absolute;
+			bottom: 1em;
+			left: 1em;
+			font-size: 0.7em;
+			}
+
+			/*Theme overrides*/
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+			text-transform: none;
+			/* font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif; */
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown data-separator="^~~~~" data-separator-vertical="^~" data-notes="^Note:">
+					<textarea data-template>
+## Scala for Java Developers
+### Lesson 5
+~~~~
+## Review
+~
+What does `.find` do?
+
+Note:
+- It's a higher order function that finds the first element in a collection that matches the given predicate.
+- Why not use filter and take the first element?
+- Efficiency - find will stop on the first element matching the predicate, filter would continue.
+
+~
+What does reduce do?
+
+Note:
+- It collapses a collection into one value. It takes a function which collapses two values and returns one, then runs it across the whole collection.
+- How does it compare to `.fold`? 
+  - foldLeft and foldRight can return a different type of value at the end.
+  - fold takes an initial value, and so it is safe to fold an empty collection.
+- When should you use reduce instead of fold?
+  - When there's no sensible default/base value. 
+  - When you want to keep the knowledge that the list was empty.
+  - I would advise you to always use reduceOption and its' varients. reduce is unsafe as it will fail on empty collections.
+~
+## traits
+
+Note:
+- These are like interfaces in Java.
+- Not you can implement methods in an Scala trait, just as you can now in Java 8.
+~
+## `case classes`
+What's a case class?  
+
+How is it different to a normal class?
+
+Note:
+- Immutable by default
+- All fields are public by default
+- No need for new keyword when constructing
+- hashCode, equals, copy, toString
+~~~~
+## Objects
+
+<small>Examples stolen from  
+  https://docs.scala-lang.org/tour/singleton-objects.html</small>
+~
+In Scala, an `object` is a singleton.
+
+Note:
+- Is anyone not familiar with singleton?
+~
+Simplest kind of object:
+
+```scala
+object Box
+```
+
+Note:
+We'll discuss why you might want trivially simple objects shortly.
+~
+More interesting object:
+
+```scala
+object Logger {
+	def info(message: String): Unit = println(s"INFO: $message")
+}
+
+//Usage
+def main(args: Array[String]) = {
+  Logger.info("App started")
+}
+```
+
+Note:
+- Scala doesn't have static methods
+- But you can put methods on methods, which are then roughly equivalent to static methods.
+~
+### Companion objects
+
+```scala
+
+class Email(val username: String, val domainName: String)
+
+object Email {
+  def fromString(emailString: String): Option[Email] = {
+    emailString.split('@') match {
+      case Array(a, b) => Some(new Email(a, b))
+      case _ => None
+    }
+  }
+}
+```
+Note:
+- Here we have an example of a companion object.
+- It's a companion because the object has the same name as the corresponding class.
+- In this example, `fromString` provides a safe way to create an Email from a String. (Safe in the sense it won't fail with an invalid email)
+- Private fields/constructors are visible among companions.
+```
+~
+Any questions about objects?
+~~~~
+## Pattern matching
+
+Note:
+- This is a feature that's been in functionl languages for quite a long time.
+- But Scala is probably the first mainstream language to have it.
+~
+What is pattern matching?
+
+You can think of it as a switch statement on steriods.<!-- .element: class="fragment" -->
+~
+```scala
+def teacher(lesson: Int) = lesson match {
+  case 1 => "Sonia"
+  case 2 => "Povilas"
+  case 3 => "Greg"
+  case 4 => "Sonia"
+  case 5 => "Greg"
+  case _ => "Can't predict the future"
+}
+```
+
+Note:
+- Here's a simple pattern match in Scala.
+- Looks the same as a switch statement in Java.
+~
+```scala
+def lessons(teacher: String) = teacher match {
+  case "Sonia"   => List(1, 4)
+  case "Povilas" => List(2)
+  case "Greg"    => List(3, 5)
+}
+```
+
+Note:
+- And of course, just like Java 7 we can match on strings.
+- **But this is a bad example.** If we passed in "Lubo" as the teacher, this would blow up with a MatchError.
+- As a side note, this would generate a compiler warning, and it's good practice to set the warnings as errors compiler flag to avoid this.
+~
+But we can also do more interesting matches...
+
+<small>Example based on  
+    https://docs.scala-lang.org/tour/pattern-matching.html</small>
+~
+```scala 
+case class Email(sender: String, title: String, body: String)
+case class SMS(caller: String, message: String)
+
+def notication(msg: Any): String = msg match {
+  case e: Email => e.title
+  case s: SMS => e.message
+}
+```
+
+Note:
+- Here we're pattern matching based on the type of the input.
+- **But this is horrible!** It takes `Any`, and will blow up if you don't pass it an Email or SMS
+~
+### Safer typed pattern match 
+
+```scala 
+sealed trait Notification
+case class Email(sender: String, title: String, body: String) extends Notification
+case class SMS(caller: String, message: String) extends Notification
+
+def notication(msg: Notification): String = msg match {
+  case e: Email => e.title
+  case s: SMS => e.message
+}
+```
+
+Note:
+- Now both `Email` and `SMS` extend `Notification`, so our function can take a Notification instead of anyone
+- But note that `Notification` is `sealed`
+- `sealed` ensures that `Notification` can only be extended/implemented within this file
+- This means we really know that this function is complete and it's impossible to pass it a Notification that it can't handle
+~
+### Going even further...  Extractors!
+
+```scala 
+sealed trait Notification
+case class Email(sender: String, title: String, body: String) extends Notification
+case class SMS(caller: String, message: String) extends Notification
+
+def notication(msg: Notification): String = msg match {
+  case Email(_, title, _) => title
+  case SMS(_, message)    => e.message
+}
+```
+
+Note:
+- Case classes, and other things like Regex patterns, have extractors.
+- Here we're pulling out just the relevant fields.
+- Before, we were using reflection, now there's a different mechanism at play here.
+- I won't get into how that works, but you can do this with case classes, regexs, and implement it with your own libraries.
+~
+That's enough theory...
+
+Note:
+- There's more cool stuff in pattern matching, but let's stop there and apply this!
+~~~~
+## Exercise
+~
+Most of Scala's features are actually library features not language features.
+
+Note:
+- People say that Scala is complex/powerful language.
+- It is powerful. But it's actually a small language with a few powerful features...
+- ...powerful enough to implement lots of features at the library level.
+~
+Let's prove that.
+~
+You've used Option.
+~
+Now reimplement it
+~
+```scala
+sealed trait Option[+A] {
+	def get(): A = ???
+	def map[B](f: A => B): Option[B] = ???
+	def getOrElse[B>:A](default: => B): B = ???
+	def orElse[B>:A](ob: => Option[B]): Option[B] = ???
+	def filter(f: A => Boolean): Option[A] = ???
+	def flatMap[B](f: A => Option[B]): Option[B] = ???
+}
+
+case class Some[+A](get: A) extends Option[A]
+case object None extends Option[Nothing]
+```
+<br>
+<small>Hint: Use pattern matching</small>
+
+Note:
+- Here's a basic version of Option. 
+- You will implement these methods on Option by replace all the `???`s.
+~
+```bash
+cd path/to/scala-for-java-devs
+git stash
+git pull
+git checkout lesson5
+
+./sbt test
+```
+
+<small>And of course, keep it immutable</small>
+~~~~
+<small>The lesson is coming to an end...</small>
+### Feedback:
+https://goo.gl/forms/LEmMoJLjw0yNyZBR2
+
+
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				history: true,
+                slideNumber: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'socket.io/socket.io.js', async: true },
+		      { src: 'plugin/notes-server/client.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
