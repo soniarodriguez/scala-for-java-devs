@@ -450,15 +450,16 @@ body {
 .reveal .slide-number {
   position: fixed;
   display: block;
-  right: 8px;
+  left: 8px;
   bottom: 8px;
   z-index: 31;
   font-family: Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: 1em;
   line-height: 1;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 5px; }
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  border-radius: 15px; }
 
 .reveal .slide-number-delimiter {
   margin: 0 3px; }
@@ -1482,7 +1483,7 @@ body {
   left: 100%;
   padding: 14px 18px 14px 18px;
   z-index: 1;
-  font-size: 18px;
+  font-size: 0.9em;
   line-height: 1.4;
   border: 1px solid rgba(0, 0, 0, 0.05);
   color: #222;

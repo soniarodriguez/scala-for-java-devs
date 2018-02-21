@@ -174,5 +174,7 @@ ul, ol, div, p {
 .reveal .slide-number-pdf {
 	display: block;
 	position: absolute;
-	font-size: 14px;
+	font-size: 1em;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 99999;	
 }
