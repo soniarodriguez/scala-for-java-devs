@@ -25,7 +25,7 @@
 			.reveal .footer {
 			position: absolute;
 			bottom: 1em;
-			left: 1em;
+			right: 6em;
 			font-size: 0.7em;
 			}
 
@@ -38,6 +38,9 @@
 	</head>
 	<body>
 		<div class="reveal">
+			<div class="footer">
+				<a href="soniarodriguez.github.io/scala-for-java-devs">soniarodriguez.github.io/scala-for-java-devs</a>
+			</div>
 			<div class="slides">
 				<section data-markdown data-separator="^~~~~" data-separator-vertical="^~" data-notes="^Note:">
 					<textarea data-template>
@@ -209,7 +212,7 @@ case class SMS(caller: String, message: String) extends Notification
 
 def notication(msg: Notification): String = msg match {
   case e: Email => e.title
-  case s: SMS => e.message
+  case s: SMS => message
 }
 ```
 
