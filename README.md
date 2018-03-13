@@ -28,12 +28,12 @@ Implements all methods in AsyncService.
 
 5. Return the item price value multiply by the number of items
   ```
-    def getTotalPrice(itemPrice: Future[Float], items: Int)
+    def getTotalPrice(itemPrice: Future[Float], items: Int): Future[Float]
   ```
   
 6. Make use of `getProduct` and `getPrice`. Return a string with the following format "Kindle: 59.99£"
   ```
-    def getPriceForKindleLine()
+    def getPriceForKindleLine(): Future[String] 
   ```
 
 7. Make use of `getProduct` and `getPrice`. Return a string with the following format "Kindle: total_price£"
