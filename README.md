@@ -16,12 +16,12 @@ Implements all methods in AsyncService.
     def expectedFailedFuture(exception: Throwable): Future[Int]
   ```
   
-3. Create a future that will return a product name after 100ms
+3. Create a future that will return a product name from syncService
   ```
     def getProduct(product: String): Future[String]
   ```
 
-4. Create a future that will return a price after 100ms
+4. Create a future that will return a price from syncService
   ```
     def getPrice(price: Float): Future[Float]
   ```

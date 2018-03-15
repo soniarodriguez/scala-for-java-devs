@@ -4,7 +4,7 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
 class AsyncServiceSpec extends FunSuite with Matchers {
-  val asyncService = new AsyncService
+  val asyncService = new AsyncService(new SyncService)
 
   test("Return a completed successful future with the value passed") {
     val result = asyncService.expectedSuccessfulFuture(10)

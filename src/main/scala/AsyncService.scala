@@ -2,7 +2,8 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
-class AsyncService {
+class AsyncService(syncService: SyncService) {
+
 
   // Create a completed successful future with the value passed
   def expectedSuccessfulFuture(value: Int): Future[Int] = ???
@@ -10,10 +11,10 @@ class AsyncService {
   // Create a completed failed future with the exception passed
   def expectedFailedFuture(exception: Throwable): Future[Int] = ???
 
-  // Create a future that will return a product after 100ms
+  // Create a future that will return a product from syncService
   def getProduct(product: String): Future[String] = ???
 
-  // Create a future that will return a price after 100ms
+  // Create a future that will return a price from syncService
   def getPrice(price: Float): Future[Float] = ???
 
   // Return the itemPrice value multiply by number of items
