@@ -1,42 +1,16 @@
-# Scala for Java developers
+# Lesson 8 - Code Kata
 
+There are three code katas to choose from:
 
+1. Fizz Buzz (Easy)
+    - https://www.wikiwand.com/en/Fizz_buzz
+    - Uncomment the test cases in `FizzBuzzSpec`, create an object called `FizzBuzz` with a method `getResult`, and implement it, using the tests ot guide you.
+2. Berlin Clock (Medium) 
+    - https://www.wikiwand.com/en/Mengenlehreuhr
+    - Uncomment the test cases in `BerlinClockSpec`, create an object called `BerlinClock` and implement it, using the tests ot guide you.
+3. Conway's Game of Life (Hard)
+    - https://www.wikiwand.com/en/Conway%27s_Game_of_Life 
+    - No test cases given. You get to figure out how to test it!
+    - I recommend you pair with another student for this Kata. 
+        - If you pair, I would recommend "ping pong pairing": http://wiki.c2.com/?PairProgrammingPingPongPattern
 
-## Lesson 7 - Futures
-
-Implements all methods in AsyncService.
-
-1. Create a completed successful future that returns the value passed
-  ```
-    def expectedSuccessfulFuture(value: Int): Future[Int]
-  ```
-
-2. Create a completed failed future with the exception passed
-  ```
-    def expectedFailedFuture(exception: Throwable): Future[Int]
-  ```
-  
-3. Create a future that will return a product name from syncService
-  ```
-    def getProduct(product: String): Future[String]
-  ```
-
-4. Create a future that will return a price from syncService
-  ```
-    def getPrice(price: Float): Future[Float]
-  ```
-
-5. Return the item price value multiply by the number of items
-  ```
-    def getTotalPrice(itemPrice: Future[Float], items: Int): Future[Float]
-  ```
-  
-6. Make use of `getProduct` and `getPrice`. Return a string with the following format "Kindle: 59.99£"
-  ```
-    def getPriceForKindleLine(): Future[String] 
-  ```
-
-7. Make use of `getProduct` and `getPrice`. Return a string with the following format "Kindle: total_price£"
-  ```
-    def getPriceForSeveralKindles(items: Int): Future[String]
-  ```
